@@ -1,0 +1,68 @@
+run:
+  deadline: 5m
+
+linters:
+  fast: false
+  disable-all: true
+  enable:
+    # - bodyclose
+    # - cyclop
+    - deadcode
+    # - depguard
+    # - dogsled
+    # - dupl
+    - errcheck
+    # - errorlint
+    # - exhaustive
+    # - exhaustivestruct
+    # - forbidigo
+    # - funlen
+    - gas
+    # - gci
+    # - gochecknoinits
+    # - gocognit
+    - goconst
+    # - gocritic
+    # - gocyclo
+    # - godot
+    # - godox
+    # - gofmt
+    # - gofumpt
+    # - goheader
+    # - goimports
+    - golint
+    # - gomnd
+    # - goprintffuncname
+    # - gosec
+    # - gosimple
+    - govet
+    # - ifshort
+    # - importas
+    - ineffassign
+    - interfacer
+    # - lll
+    # - makezero
+    - maligned
+    - megacheck
+    # - misspell
+    # - nakedret
+    # - nestif
+    # - noctx
+    # - nolintlint
+    # - prealloc
+    # - predeclared
+    # - revive
+    # - rowserrcheck
+    # - scopelint
+    # - staticcheck
+    - structcheck
+    # - stylecheck
+    # - testpackage
+    # - thelper
+    # - typecheck
+    - unconvert
+    # - unparam
+    # - unused
+    - varcheck
+    # - whitespace
+    # - wsl

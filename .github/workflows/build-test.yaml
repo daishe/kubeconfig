@@ -1,0 +1,81 @@
+name: "Build & test"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: "Test [${{ matrix.os }}]"
+    runs-on: ${{ matrix.os }}
+
+    env:
+      go_version: 1.16.x
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu-latest
+        - windows-latest
+        - macOS-latest
+
+    steps:
+
+    - name: "Checkout"
+      uses: actions/checkout@v2
+
+    - name: "Setup Go"
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ env.go_version }}
+
+    - name: "Restore Go modules cache (if possible)"
+      uses: actions/cache@v2
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-${{ env.go_version }}-${{ hashFiles('**/go.sum') }}
+
+    - name: "Lint Go code"
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | bash -s -- -b $HOME/go/bin latest
+        golangci-lint run -v
+
+    - name: "Test project"
+      run: go test -timeout 5m ./...
+
+  build:
+    name: "Build [${{ matrix.GOOS }}/${{ matrix.GOARCH }}]"
+    runs-on: ubuntu-latest
+
+    env:
+      go_version: 1.16.x
+
+    strategy:
+      fail-fast: false
+      matrix:
+        GOOS:
+        - linux
+        - windows
+        - darwin
+        GOARCH:
+        - amd64
+
+    steps:
+
+    - name: "Checkout"
+      uses: actions/checkout@v2
+
+    - name: "Setup Go"
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ env.go_version }}
+
+    - name: "Restore Go modules cache (if possible)"
+      uses: actions/cache@v2
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-${{ env.go_version }}-${{ hashFiles('**/go.sum') }}
+
+    - name: "Build project [${{ matrix.GOOS }}/${{ matrix.GOARCH }}]"
+      run: GOOS=${{ matrix.GOOS }} GOARCH=${{ matrix.GOARCH }} go build -o .tmp/kubeconfig-${{ matrix.GOOS }}-${{ matrix.GOARCH }} -v .
