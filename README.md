@@ -2,10 +2,14 @@
 
 *simple Kubernetes config manager*
 
-[![Latest release status](https://github.com/daishe/kubeconfig/actions/workflows/release.yaml/badge.svg)](https://github.com/daishe/kubeconfig/actions/workflows/release.yaml)
-[![Latest release candidate status](https://github.com/daishe/kubeconfig/actions/workflows/release-candidate.yaml/badge.svg)](https://github.com/daishe/kubeconfig/actions/workflows/release-candidate.yaml)
-[![Go Reference](https://pkg.go.dev/badge/github.com/daishe/kubeconfig.svg)](https://pkg.go.dev/github.com/daishe/kubeconfig)
-[![Go Report Card](https://goreportcard.com/badge/github.com/daishe/kubeconfig)](https://goreportcard.com/report/github.com/daishe/kubeconfig)
+[![Latest stable version](https://img.shields.io/github/v/tag/daishe/kubeconfig?label=latest%20stable%20version&sort=semver)](https://github.com/daishe/kubeconfig/releases)
+[![Latest release status](https://img.shields.io/github/workflow/status/daishe/kubeconfig/Release?label=release%20build&logo=github&logoColor=fff)](https://github.com/daishe/kubeconfig/actions/workflows/release.yaml)
+[![Latest release candidate status](https://img.shields.io/github/workflow/status/daishe/kubeconfig/Release%20candidate?label=release%20candidate%20build&logo=github&logoColor=fff)](https://github.com/daishe/kubeconfig/actions/workflows/release-candidate.yaml)
+
+[![Go reference](https://pkg.go.dev/badge/github.com/daishe/kubeconfig.svg)](https://pkg.go.dev/github.com/daishe/kubeconfig)
+[![Go version](https://img.shields.io/github/go-mod/go-version/daishe/kubeconfig?label=version&logo=go&logoColor=fff)](https://golang.org/dl/)
+[![Go report card](https://goreportcard.com/badge/github.com/daishe/kubeconfig)](https://goreportcard.com/report/github.com/daishe/kubeconfig)
+[![License](https://img.shields.io/github/license/daishe/kubeconfig)](https://github.com/daishe/kubeconfig/blob/master/LICENSE)
 
 Instead of keeping one large kubectl config file with lots of entries, kubeconfig allows you to simply switch the entire file! This approach is much easier to use, especially when working with lots of temporary Kubernetes clusters.
 
