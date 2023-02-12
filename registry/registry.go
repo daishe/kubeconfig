@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sort"
@@ -118,14 +117,14 @@ func List(registry string) ([]string, error) {
 }
 
 func listDirReclusive(path string, result *[]string) error {
-	files, err := ioutil.ReadDir(path)
+	files, err := os.ReadDir(path)
 	if err != nil {
 		return fmt.Errorf("connot read directory %q: %w", path, err)
 	}
 
 	for _, file := range files {
 		switch {
-		case file.Mode().IsRegular():
+		case file.Type().IsRegular():
 			*result = append(*result, filepath.Join(path, file.Name()))
 		case file.IsDir():
 			if err := listDirReclusive(filepath.Join(path, file.Name()), result); err != nil {

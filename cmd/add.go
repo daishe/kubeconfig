@@ -17,7 +17,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 
@@ -73,7 +72,7 @@ func addRun(ctx context.Context, g *rootOpts, o *addOpts) error {
 		return err
 	}
 
-	tmp, err := ioutil.TempFile("", "*.config")
+	tmp, err := os.CreateTemp("", "*.config")
 	if err != nil {
 		return fmt.Errorf("cannot create temporary file: %w", err)
 	}
