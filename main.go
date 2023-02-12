@@ -20,6 +20,11 @@ import (
 	"github.com/daishe/kubeconfig/cmd"
 )
 
+var (
+	Version = "development" //nolint:deadcode
+	Commit  = "?"           //nolint:deadcode
+)
+
 func main() {
 	cmd.Execute(context.Background())
 }

@@ -5,46 +5,31 @@ on:
     tags: # run when non-official semver tag has been introduced (release candidates etc)
       - "v[0-9]+.[0-9]+.[0-9]+-*"
 
+env:
+  go_version: 1.16.x
+
 jobs:
+  build-test:
+    name: "Build & test"
+
+    uses: ./.github/workflows/build-test.yaml
+
   release-candidate:
     name: "Release candidate"
-    runs-on: "ubuntu-latest"
 
-    env:
-      go_version: 1.16.x
+    needs: build-test
+
+    runs-on: "ubuntu-latest"
 
     steps:
 
     - name: "Checkout"
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: "Setup Go"
-      uses: actions/setup-go@v2
+    - name: Download binaries
+      uses: actions/download-artifact@v3
       with:
-        go-version: ${{ env.go_version }}
-
-    - name: "Restore Go modules cache (if possible)"
-      uses: actions/cache@v2
-      with:
-        path: ~/go/pkg/mod
-        key: ${{ runner.os }}-${{ env.go_version }}-${{ hashFiles('**/go.sum') }}
-
-    - name: "Lint Go code"
-      run: |
-        curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | bash -s -- -b $HOME/go/bin latest
-        golangci-lint run -v
-
-    - name: "Test project"
-      run: go test -timeout 5m ./...
-
-    - name: "Build project [linux/amd64]"
-      run: GOOS=linux GOARCH=amd64 go build -o dist/kubeconfig-linux-amd64 -v .
-
-    - name: "Build project [windows/amd64]"
-      run: GOOS=windows GOARCH=amd64 go build -o dist/kubeconfig-windows-amd64.exe -v .
-
-    - name: "Build project [darwin/amd64]"
-      run: GOOS=darwin GOARCH=amd64 go build -o dist/kubeconfig-darwin-amd64 -v .
+        path: dist
 
     - name: "Release"
       uses: "marvinpinto/action-automatic-releases@latest"
@@ -52,5 +37,5 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         prerelease: true
         files: |
-          "LICENSE"
-          "dist/*"
+          LICENSE
+          dist/*/*
